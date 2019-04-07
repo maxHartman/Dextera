@@ -1,6 +1,6 @@
 import GoogleCloudSpeech as gc
-
-#from arm import Arm
+import pyaudio
+from arm import Arm
 
 key_words_arr = ['move up', 'move down', 'inches', 'degrees', 'rotate in', 'rotate out', 'pan up', 'Jimmy', 'pan down']
 language_code = 'en-US'  # a BCP-47 language tag
@@ -18,7 +18,7 @@ streaming_config = gc.types.StreamingRecognitionConfig(
     single_utterance=True,
     interim_results=True)
 
-#dextera = Arm()
+dextera = Arm()
 
 while True:
     with gc.MicrophoneStream(gc.RATE, gc.CHUNK) as stream:
@@ -30,7 +30,7 @@ while True:
 
         # Now, put the transcription responses to use.
         transcript = gc.listen_print_loop(responses)
-        #dextera.parse_text(transcript)
+        dextera.parse_text(transcript)
         if transcript == '':
             print ('NO VALID COMMAND GIVEN')
         else:

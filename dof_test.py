@@ -32,28 +32,28 @@ wristRotate = MotorPIDDOF(pi, wristRotateMotor, wristAngleSensor, 1, kp=-.001, k
 elevator = MotorPIDDOF(pi, elevatorMotor, encoder, 0, kp = 0.05, ki=0, kd=0)
 
 wristPan.set_position(45)
+elevatorMotor.set_power(0)
 
-testMotors = 0
+testMotors = 1
 while testMotors:
     #test motor classes
-    gripperMotorR.set_power(.5)
-    gripperMotorL.set_power(.5)
-    wristRotateMotor.set_power(0)
+#    gripperMotorR.set_power(.5)
+#    gripperMotorL.set_power(.5)
+    wristRotateMotor.set_power(0.9)
+    elevatorMotor.set_power(-0.9)
+    time.sleep(10)
+#    #test dofs
+#    wristPan.set_position(45)
+#    wristRotate.set_position(200)
+#    time.sleep(3.5)
+#    gripperMotorR.set_power(-.5)
+#    gripperMotorL.set_power(-.5)
+#    wristRotateMotor.set_power(0)
     elevatorMotor.set_power(-1)
-    wristRotateMotor.set_power(0.5)
-    
-    #test dofs
-    wristPan.set_position(45)
-    wristRotate.set_position(200)
-    time.sleep(3.5)
-    gripperMotorR.set_power(-.5)
-    gripperMotorL.set_power(-.5)
-    wristRotateMotor.set_power(0)
-    elevatorMotor.set_power(-1)
-    wristPan.set_position(0)
-    wristRotateMotor.set_power(-0.5)
+    #wristPan.set_position(0)
+    #wristRotateMotor.set_power(-0.5)
     #wristRotate.set_position(700)
-    time.sleep(1.5)
+    time.sleep(10)
     #print(wristRotate.get_counter())
     
 testSensors = 0
@@ -65,17 +65,17 @@ testDOFs = 1
 while testDOFs:
     
  
-    #wristRotate.set_position(500)
-    elevator.set_position(1500)
+    wristRotate.set_position(200)
+   # elevator.set_position(1500)
     print(wristAngleSensor.get_value())
     time.sleep(10)
-    print(elevator.sensor.get_value())
+    #print(elevator.sensor.get_value())
 
     print("switching")
-    #wristRotate.set_position(1000)
-    elevator.set_position(-1500)
+    wristRotate.set_position(800)
+    #elevator.set_position(-1500)
     time.sleep(10)
-    print(elevator.sensor.get_value())
+    #print(elevator.sensor.get_value())
 
     print("switching")
     

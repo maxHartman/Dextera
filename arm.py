@@ -22,8 +22,8 @@ class Arm:
 
     GRIPPER_L_PIN_A = 0
     GRIPPER_L_PIN_B = 22
-    GRIPPER_R_PIN_A = 5
-    GRIPPER_R_PIN_B = 17
+    GRIPPER_R_PIN_A = 17
+    GRIPPER_R_PIN_B = 5
 
     ELEVATOR_MOTOR_PIN_A = 2
     ELEVATOR_MOTOR_PIN_B = 3
@@ -53,25 +53,24 @@ class Arm:
         gripper_motor_r = GearMotor(pi, self.GRIPPER_L_PIN_A, self.GRIPPER_L_PIN_B)
         gripper_motor_l = GearMotor(pi, self.GRIPPER_R_PIN_A, self.GRIPPER_R_PIN_B)
         wrist_rotate_motor = ServoMotor(pi, self.WRIST_ROTATE_SERVO_PIN)
-        elevator_motor = GearMotor(pi, self.ELEVATOR_MOTOR_PIN_A, self.ELEVATOR_MOTOR_PIN_B)
+        self.elevator_motor = GearMotor(pi, self.ELEVATOR_MOTOR_PIN_A, self.ELEVATOR_MOTOR_PIN_B)
 
         self.pan = ServoDOF(pi, self.WRIST_PAN_PIN)
-        self.rotate = MotorPIDDOF(pi, wrist_rotate_motor, wrist_angle_sensor, 0, kp=.001, ki=-.000, kd=-.0000)
-        self.vertical = MotorPIDDOF(pi, elevator_motor, encoder, 0, kp=-0.05, ki=0, kd=0)
+        self.rotate = MotorPIDDOF(pi, wrist_rotate_motor, wrist_angle_sensor, 1, kp=-.001, ki=-.000, kd=-.0000)
+        self.vertical = MotorPIDDOF(pi, self.elevator_motor, encoder, 0, kp=0.05, ki=0, kd=0)
 
         self.gripper_1 = Gripper(gripper_motor_l)
         self.gripper_2 = Gripper(gripper_motor_r)
-        self.q = [3000, 0, 45]  # TODO: NOTE: 50 is just a placeholder... figure out absolute vertical position
+        self.q = [0, 0, 45]  # TODO: NOTE: 50 is just a placeholder... figure out absolute vertical position
         self.__full_set_position(self.q)
         self.o_curr = FK(self.q)
         return
 
     def __full_set_position(self, q):
-        self.vertical.set_position(q[self.VERTICAL_MOTOR])
-        time.sleep(5)
-        # self.rotate.set_position(q[self.ROTATE_MOTOR])
         self.pan.set_position(q[self.PAN_MOTOR])
-        print(str(q[self.PAN_MOTOR]))
+        self.vertical.set_position(0)
+        self.rotate.set_position(500)
+       
         self.gripper_1.close()
         self.gripper_2.close()
         return
@@ -98,6 +97,7 @@ class Arm:
                 self.__parse_power_cmd(command)
             else:
                 self.__parse_relative_cmd(command)
+        print('parse return')
         return
 
     def __remove_symbols_and_name(self, cmd):
@@ -155,16 +155,16 @@ class Arm:
         if 'move' in command:
             direction = 1 if self.MOVE_WORD in command else -1
             new_relative_pos *= direction
-            print(str(new_relative_pos) + " ... ")
+            
             if self.vertical.set_position(self.q[self.VERTICAL_MOTOR] + new_relative_pos):
-                time.sleep(5)
+                print(str(self.q[self.VERTICAL_MOTOR] + new_relative_pos) + " ... ")
                 self.q[self.VERTICAL_MOTOR] += new_relative_pos
+            print('testing')
             return
         if 'rotate' in command:
             direction = 1 if self.ROTATE_WORD in command else -1
             new_relative_pos *= direction
             if self.rotate.set_position(self.q[self.ROTATE_MOTOR] + new_relative_pos):
-                time.sleep(5)
                 self.q[self.ROTATE_MOTOR] += new_relative_pos
             return
         if 'pan' in command:

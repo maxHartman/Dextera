@@ -15,5 +15,6 @@ dextera = Arm()
 while True:
     command = input('command: ')
     dextera.parse_text(command)
+    print('wtf')
 
 # when program is stopped, the motor does not stop

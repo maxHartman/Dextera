@@ -175,7 +175,7 @@ class AnalogInput(Sensor):
 class Gripper(object):
 
     motor = None
-    close_power = -0.2
+    close_power = -0.5
     open_power = 0.5
     sleep_time = 5
 
@@ -286,7 +286,8 @@ class MotorPIDDOF(DOF):
     pin_a = None
     pi = None
 
-    POWER = .5
+    V_POWER = .5
+    R_POWER = 0.1
     FREQUENCY = 50  # Hz
     TRIGGER_OUT_PIN = 13
     TRIGGER_IN_PIN = 6
@@ -322,7 +323,9 @@ class MotorPIDDOF(DOF):
         return
 
     def set_velocity(self, direction):
-        self.motor.set_power(direction * self.POWER)
+        if self.continuous:
+            self.motor.set_power(direction * self.R_POWER)
+        self.motor.set_power(direction * self.V_POWER)
 
     def set_position(self, position):
         self.target = position
@@ -361,8 +364,7 @@ class MotorPIDDOF(DOF):
                 error = errorNoRot
             if (abs(errorCWRot) < abs(errorCCWRot)) and (abs(errorCWRot) < abs(errorNoRot)):
                 error = errorCWRot
-            else:
-                error = 0
+
         else:
             error = self.target - self.sensor.get_value()
         
