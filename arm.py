@@ -69,7 +69,7 @@ class Arm:
     def __full_set_position(self, q):
         self.vertical.set_position(q[self.VERTICAL_MOTOR])
         time.sleep(5)
-        #self.rotate.set_position(q[self.ROTATE_MOTOR])
+        # self.rotate.set_position(q[self.ROTATE_MOTOR])
         self.pan.set_position(q[self.PAN_MOTOR])
         print(str(q[self.PAN_MOTOR]))
         self.gripper_1.close()
@@ -129,7 +129,7 @@ class Arm:
 
     def __parse_gripper_cmd(self, command):  # 'Open gripper x'
         g_num = int(command.split()[-1 + self.OFFSET])
-        gripper = self.gripper_1 if g_num == 1 else  self.gripper_2
+        gripper = self.gripper_1 if g_num == 1 else self.gripper_2
         if 'open' in command and self.gripper_closed[g_num - 1]:  # Array offset
             gripper.open()
             self.gripper_closed[g_num - 1] = False
@@ -155,7 +155,7 @@ class Arm:
         if 'move' in command:
             direction = 1 if self.MOVE_WORD in command else -1
             new_relative_pos *= direction
-            print(str(new_relative_pos) + " ... " )
+            print(str(new_relative_pos) + " ... ")
             if self.vertical.set_position(self.q[self.VERTICAL_MOTOR] + new_relative_pos):
                 time.sleep(5)
                 self.q[self.VERTICAL_MOTOR] += new_relative_pos

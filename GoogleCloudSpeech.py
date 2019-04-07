@@ -1,7 +1,7 @@
 """
 NOTE: This module requires the additional dependency `pyaudio`. To install
 using pip:
-    pip install pyaudio
+    pip3 install pyaudio
 Example usage:
     python GoogleCloudSpeech.py
 """
