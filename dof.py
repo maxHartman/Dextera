@@ -211,6 +211,7 @@ class DOF(object):
     def get_position(self):
         pass
 
+
 class ServoDOF(DOF):
     
     FREQUENCY = 100    
@@ -273,7 +274,10 @@ class ServoDOF(DOF):
         print ('NOT IMPLEMENTED')
         pass
 
+
 pid_trigger_init = 0
+
+
 class MotorPIDDOF(DOF):
 
     motor = None

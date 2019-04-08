@@ -100,7 +100,6 @@ class Arm:
                 else:
                     if 'power up' in command:
                         self.__power_up()
-                        self.power_up = True
                     else:
                         print('turn power up first!')
 
@@ -112,8 +111,8 @@ class Arm:
     def __remove_symbols_and_name(self, cmd):
         cmd = re.sub("[^A-Za-z0-9 ]", "", cmd, flags=re.UNICODE)
         replace_map = {self.NAME.lower(): '', 'units ': '', 'unit ': '', '-in ': '', 'degrees ': '', 'inches ': '', 'inch ': '',
-                       'in ': '', 'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6',
-                       'seven': '7', 'eight': '8', 'nine': '9', 'to': '2'
+                       'in ': '', 'one ': '1 ', 'two ': '2 ', 'three ': '3 ', 'four ': '4 ', 'five ': '5 ', 'six ': '6 ',
+                       'seven ': '7 ', 'eight ': '8 ', 'nine ': '9 ', 'to ': '2 '
                        }
         for entry in replace_map:
             cmd = cmd.replace(entry, replace_map[entry])
@@ -202,11 +201,13 @@ class Arm:
         print('starting...')
         self.vertical.zero()
         print('POWERING UP')
+        self.power_up = True
         return
 
     def __power_down(self):
         self.__update_q(self.OFF_Q)
         self.__full_set_position()
         print('POWERING DOWN')
+        self.power_up = False
         return
 
