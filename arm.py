@@ -194,11 +194,11 @@ class Arm:
         return
 
     def __power_up(self):
+        self.__update_q(self.START_Q)
+        self.__full_set_position()
         print('Turn power on now!')
         time.sleep(10)
         print('starting...')
-        self.__update_q(self.START_Q)
-        self.__full_set_position()
         self.vertical.zero()
         print('POWERING UP')
         return
