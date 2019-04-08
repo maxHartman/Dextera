@@ -62,7 +62,7 @@ class Arm:
 
         self.gripper_1 = Gripper(gripper_motor_l)
         self.gripper_2 = Gripper(gripper_motor_r)
-        self.o_curr = FK(self.q)
+#        self.o_curr = FK(self.q)
         return
 
     def __full_set_position(self):
