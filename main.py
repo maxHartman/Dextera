@@ -1,6 +1,6 @@
 import GoogleCloudSpeech as gc
 import pyaudio
-from arm import Arm
+#from arm import Arm
 
 name = 'Graham'
 key_words_arr = [name, 'move up', 'move down', 'inches', 'degrees', 'rotate in', 'rotate out', 'pan up', 'pan down']
@@ -19,7 +19,7 @@ streaming_config = gc.types.StreamingRecognitionConfig(
     single_utterance=True,
     interim_results=True)
 
-dextera = Arm()
+#dextera = Arm()
 
 while True:
     try:
@@ -28,10 +28,10 @@ while True:
             requests = (gc.types.StreamingRecognizeRequest(audio_content=content)
                         for content in audio_generator)
 
-            responses = client.streaming_recognize(streaming_config, requests)
+            responses = client.streaming_recognize(streaming_config, requests, timeout=15)
             # Now, put the transcription responses to use.
             transcript = gc.listen_print_loop(responses)
-            dextera.parse_text(transcript)
+ #           dextera.parse_text(transcript)
             if transcript == '':
                 print ('NO VALID COMMAND GIVEN')
             else:
