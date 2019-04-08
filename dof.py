@@ -211,8 +211,7 @@ class DOF(object):
 
 class ServoDOF(DOF):
     
-    FREQUENCY = 50
-    
+    FREQUENCY = 100    
     pi = None
     pin = None
 
@@ -251,7 +250,8 @@ class ServoDOF(DOF):
     def set_position(self, deg_position):
         thous_position = self.__convert_to_thousands(deg_position)
         if self.__in_limits(thous_position):
-            self.pi.hardware_PWM(self.pin, self.FREQUENCY, int(thous_position*50))
+            self.pi.hardware_PWM(self.pin, self.FREQUENCY, int(thous_position*100))
+            print(thous_position*50)
             print('pos in limits')
             return True
         self.__out_of_limits(thous_position)

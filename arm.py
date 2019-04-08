@@ -63,18 +63,16 @@ class Arm:
         self.gripper_2 = Gripper(gripper_motor_r)
         self.q = [00, 500, 0]  # TODO: NOTE: 50 is just a placeholder... figure out absolute vertical position
         self.__full_set_position(self.q)
-        time.sleep(100)
         self.o_curr = FK(self.q)
         return
 
     def __full_set_position(self, q):
         print(q[self.PAN_MOTOR])
-        self.pan.set_position(0)
         
-        #self.pan.set_position(q[self.PAN_MOTOR])
+        self.pan.set_position(q[self.PAN_MOTOR])
         self.vertical.set_position(q[self.VERTICAL_MOTOR])
         self.rotate.set_position(q[self.ROTATE_MOTOR])
-        time.sleep(1000)
+        
         self.gripper_1.close()
         self.gripper_2.close()
         return
