@@ -37,7 +37,7 @@ class Arm:
     WRIST_ROTATE_SENSOR_PIN = 0
     WRIST_ROTATE_SERVO_PIN = 19
 
-    START_Q = [0, 400, 0]  # TODO: NOTE - 50 is just a placeholder
+    START_Q = [0, 500, 0]
     OFF_Q = [0, 400, 0]  # TODO: SET TO VALUES WE WANT
 
     MOVE_WORD = 'up'
@@ -61,19 +61,17 @@ class Arm:
 
         self.gripper_1 = Gripper(gripper_motor_l)
         self.gripper_2 = Gripper(gripper_motor_r)
-        self.q = [00, 500, 0]  # TODO: NOTE: 50 is just a placeholder... figure out absolute vertical position
-        self.__full_set_position(self.q)
+        self.__update_q(self.START_Q)
+        self.__full_set_position()
         time.sleep(100)
         self.o_curr = FK(self.q)
         return
 
-    def __full_set_position(self, q):
-        print(q[self.PAN_MOTOR])
+    def __full_set_position(self):
         self.pan.set_position(0)
-        
         #self.pan.set_position(q[self.PAN_MOTOR])
-        self.vertical.set_position(q[self.VERTICAL_MOTOR])
-        self.rotate.set_position(q[self.ROTATE_MOTOR])
+        self.vertical.set_position(self.q[self.VERTICAL_MOTOR])
+        self.rotate.set_position(self.q[self.ROTATE_MOTOR])
         time.sleep(1000)
         self.gripper_1.close()
         self.gripper_2.close()
@@ -86,7 +84,7 @@ class Arm:
 # *** TODO: NEED TO ADD IN CATCHING ERRORS HERE, and dof.py ***
 
     def parse_text(self, command):
-        if command is None or command == '':
+        if command is None or command == '' or command == self.NAME:
             print('Sorry, I did not hear you')
         else:
             command = command.lower()
@@ -101,13 +99,17 @@ class Arm:
                 self.__parse_power_cmd(command)
             else:
                 self.__parse_relative_cmd(command)
-        print('parse return')
+        print('parse return done')
         return
 
     def __remove_symbols_and_name(self, cmd):
         cmd = re.sub("[^A-Za-z0-9 ]", "", cmd, flags=re.UNICODE)
-        cmd = cmd.replace('degrees', '').replace('inches', '').replace(self.NAME, '')
-        cmd = cmd.replace('units','')
+        replace_map = {self.NAME: '', 'units': '', 'unit': '', '-in': '', 'degrees': '', 'inches': '', 'inch': '',
+                       'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6', 'seven': '7',
+                       'eight': '8', 'nine': '9', 'to': '2'
+                       }
+        for entry in replace_map:
+            cmd = cmd.replace(entry, replace_map[entry])
         return cmd
 
     def __parse_motion_cmd(self, command):
@@ -186,5 +188,5 @@ class Arm:
 
     def __parse_power_cmd(self, command):
         self.__update_q(self.START_Q) if 'on' in command else self.__update_q(self.OFF_Q)
-        self.__full_set_position(self.q)
+        self.__full_set_position()
         return
