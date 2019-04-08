@@ -80,36 +80,39 @@ class Arm:
 # *** TODO: NEED TO ADD IN CATCHING ERRORS HERE, and dof.py ***
 
     def parse_text(self, command):
-        if command is None or command == '' or command == self.NAME:
-            print('Sorry, I did not hear you')
-        else:
-            command = command.lower()
-            command = self.__remove_symbols_and_name(command)
-            if self.power_up:
-                if 'start' in command or 'stop' in command:
-                    self.__parse_motion_cmd(command)
-                elif 'open' in command or 'close' in command:
-                    self.__parse_gripper_cmd(command)
-                elif 'go to' in command:
-                    self.__parse_location_cmd(command)
-                elif 'power down' in command:
-                    self.__power_down()
-                else:
-                    self.__parse_relative_cmd(command)
+        try:
+            if command is None or command == '' or command == self.NAME:
+                print('Sorry, I did not hear you')
             else:
-                if 'power up' in command:
-                    self.__power_up()
-                    self.power_up = True
+                command = command.lower()
+                command = self.__remove_symbols_and_name(command)
+                if self.power_up:
+                    if 'start' in command or 'stop' in command:
+                        self.__parse_motion_cmd(command)
+                    elif 'open' in command or 'close' in command:
+                        self.__parse_gripper_cmd(command)
+                    elif 'go to' in command:
+                        self.__parse_location_cmd(command)
+                    elif 'power down' in command:
+                        self.__power_down()
+                    else:
+                        self.__parse_relative_cmd(command)
                 else:
-                    print('turn power up first!')
+                    if 'power up' in command:
+                        self.__power_up()
+                        self.power_up = True
+                    else:
+                        print('turn power up first!')
 
-        print('parse return done')
+            print('parse return done')
+        except Exception:
+            print('invalid command...')
         return
 
     def __remove_symbols_and_name(self, cmd):
         cmd = re.sub("[^A-Za-z0-9 ]", "", cmd, flags=re.UNICODE)
-        replace_map = {self.NAME: '', 'units': '', 'unit': '', '-in': '', 'degrees': '', 'inches': '', 'inch': '',
-                       'in': '', 'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6',
+        replace_map = {self.NAME: '', 'units ': '', 'unit ': '', '-in ': '', 'degrees ': '', 'inches ': '', 'inch ': '',
+                       'in ': '', 'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6',
                        'seven': '7', 'eight': '8', 'nine': '9', 'to': '2'
                        }
         for entry in replace_map:
