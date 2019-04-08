@@ -38,8 +38,8 @@ class Arm:
     WRIST_ROTATE_SENSOR_PIN = 0
     WRIST_ROTATE_SERVO_PIN = 19
 
-    START_Q = [-1000, 500, 0]
-    OFF_Q = [-500, 500, -90]  # TODO: SET TO VALUES WE WANT
+    START_Q = [0, 500, 0]
+    OFF_Q = [0, 500, 0]  # TODO: SET TO VALUES WE WANT
 
     MOVE_WORD = 'up'  # and down
     ROTATE_WORD = 'here'  # and there
@@ -62,8 +62,6 @@ class Arm:
 
         self.gripper_1 = Gripper(gripper_motor_l)
         self.gripper_2 = Gripper(gripper_motor_r)
-        self.__update_q(self.START_Q)
-        self.__full_set_position()
         self.o_curr = FK(self.q)
         return
 
@@ -101,6 +99,7 @@ class Arm:
             else:
                 if 'power up' in command:
                     self.__power_up()
+                    self.power_up = True
                 else:
                     print('turn power up first!')
 
@@ -192,9 +191,12 @@ class Arm:
         return
 
     def __power_up(self):
-        self.vertical.zero()
+        print('Turn power on now!')
+        time.sleep(10)
+        print('starting...')
         self.__update_q(self.START_Q)
         self.__full_set_position()
+        self.vertical.zero()
         print('POWERING UP')
         return
 
