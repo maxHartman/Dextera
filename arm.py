@@ -37,8 +37,8 @@ class Arm:
     WRIST_ROTATE_SENSOR_PIN = 0
     WRIST_ROTATE_SERVO_PIN = 19
 
-    START_Q = [50, 400, 0]  # TODO: NOTE - 50 is just a placeholder
-    OFF_Q = [-1500, -90, -90]  # TODO: SET TO VALUES WE WANT
+    START_Q = [0, 400, 0]  # TODO: NOTE - 50 is just a placeholder
+    OFF_Q = [0, 400, 0]  # TODO: SET TO VALUES WE WANT
 
     MOVE_WORD = 'up'
     ROTATE_WORD = 'in'
@@ -56,21 +56,25 @@ class Arm:
         self.elevator_motor = GearMotor(pi, self.ELEVATOR_MOTOR_PIN_A, self.ELEVATOR_MOTOR_PIN_B)
 
         self.pan = ServoDOF(pi, self.WRIST_PAN_PIN)
-        self.rotate = MotorPIDDOF(pi, wrist_rotate_motor, wrist_angle_sensor, 1, kp=-.001, ki=-.000, kd=-.0000)
-        self.vertical = MotorPIDDOF(pi, self.elevator_motor, encoder, 0, kp=0.05, ki=0, kd=0)
+        self.rotate = MotorPIDDOF(pi, wrist_rotate_motor, wrist_angle_sensor, 1, kp=-.001, ki=-.000, kd=-.0000, MIN=0, MAX=1000)
+        self.vertical = MotorPIDDOF(pi, self.elevator_motor, encoder, 0, kp=0.05, ki=0, kd=0, MIN=-9000, MAX=0)
 
         self.gripper_1 = Gripper(gripper_motor_l)
         self.gripper_2 = Gripper(gripper_motor_r)
-        self.q = [0, 0, 0]  # TODO: NOTE: 50 is just a placeholder... figure out absolute vertical position
+        self.q = [00, 500, 0]  # TODO: NOTE: 50 is just a placeholder... figure out absolute vertical position
         self.__full_set_position(self.q)
+        time.sleep(100)
         self.o_curr = FK(self.q)
         return
 
     def __full_set_position(self, q):
-        self.pan.set_position(q[self.PAN_MOTOR])
-        self.vertical.set_position(0)
-        self.rotate.set_position(500)
-       
+        print(q[self.PAN_MOTOR])
+        self.pan.set_position(0)
+        
+        #self.pan.set_position(q[self.PAN_MOTOR])
+        self.vertical.set_position(q[self.VERTICAL_MOTOR])
+        self.rotate.set_position(q[self.ROTATE_MOTOR])
+        time.sleep(1000)
         self.gripper_1.close()
         self.gripper_2.close()
         return

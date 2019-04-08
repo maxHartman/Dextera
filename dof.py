@@ -251,7 +251,7 @@ class ServoDOF(DOF):
     def set_position(self, deg_position):
         thous_position = self.__convert_to_thousands(deg_position)
         if self.__in_limits(thous_position):
-            self.pi.hardware_PWM(self.pin, self.FREQUENCY, int((thous_position/20000)*1000000))
+            self.pi.hardware_PWM(self.pin, self.FREQUENCY, int(thous_position*50))
             print('pos in limits')
             return True
         self.__out_of_limits(thous_position)
@@ -293,8 +293,13 @@ class MotorPIDDOF(DOF):
     TRIGGER_IN_PIN = 6
     counter = 0
 
-    def __init__(self, pi, motor, sensor, continuous, kp, ki, kd):
+    MIN = None
+    MAX = None
+
+    def __init__(self, pi, motor, sensor, continuous, kp, ki, kd, MIN, MAX):
         super(MotorPIDDOF, self).__init__()
+        self.MIN = MIN
+        self.MAX = MAX
         self.pi = pi
         self.motor = motor
         self.sensor = sensor
@@ -322,15 +327,27 @@ class MotorPIDDOF(DOF):
         # TODO: update location
         return
 
+    def zero(self):
+        self.motor.set_power(0.5)
+        time.sleep(20)
+        self.sensor.reset_position()
+        self.set_position(-1000)
+        time.sleep(5)	
+
     def set_velocity(self, direction):
+        self.disable_pid()
         if self.continuous:
             self.motor.set_power(direction * self.R_POWER)
         self.motor.set_power(direction * self.V_POWER)
 
     def set_position(self, position):
-        self.target = position
-        self.enable_pid()
-        return True
+        if (position < self.MAX) and (position > self.MIN):
+            self.target = position
+            self.enable_pid()
+            return True
+        else:
+            print("position assigned out of range")
+            return False
 
     def enable_pid(self):
         if self.pid_enabled == 0:
