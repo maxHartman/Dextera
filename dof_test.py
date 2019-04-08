@@ -31,17 +31,14 @@ elevatorMotor = GearMotor(pi, ELEVATOR_MOTOR_PIN_A, ELEVATOR_MOTOR_PIN_B)
 wristPan = ServoDOF(pi, WRIST_PAN_PIN)
 wristRotate = MotorPIDDOF(pi, wristRotateMotor, wristAngleSensor, 1, kp=-.001, ki=-.000, kd=-.0000, MIN=-0, MAX=1000)
 elevator = MotorPIDDOF(pi, elevatorMotor, encoder, 0, kp = 0.05, ki=0, kd=0, MIN=-9000, MAX=0)
-degree_val = 0 
-thous_range = 2500 - (500)
-deg_range = 90 +90
-new_value = (degree_val - (-90)) * thous_range / deg_range + 500
-print(int(new_value))
+ 
 wristPan.set_position(0)
 elevatorMotor.set_power(0)
 gripper_1 = Gripper(gripperMotorR)
 gripper_2 = Gripper(gripperMotorL)
 
 wristRotate.set_position(300)
+time.sleep(100)
 wristPan.set_position(0)
 gripper_2.open()
 gripper_2.close()
