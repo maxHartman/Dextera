@@ -385,7 +385,9 @@ class MotorPIDDOF(DOF):
             errorCCWRot = (self.target - rotationDistance) - sensor
             errorNoRot = self.target - sensor
             errorCWRot = (self.target + rotationDistance) - sensor
-            
+
+            error = 0
+
             if (abs(errorCCWRot) < abs(errorNoRot)) and (abs(errorCCWRot) < abs(errorCWRot)):
                 error = errorCCWRot
             if (abs(errorNoRot) < abs(errorCCWRot)) and (abs(errorNoRot) < abs(errorCWRot)):
