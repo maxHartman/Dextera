@@ -11,6 +11,7 @@ class Arm:
     # TODO: MAKE THESE VARIABLES PRIVATE
     q = []  # joint angle positions (length 3) VERTICAL, ROTATE, PAN
     o_curr = []  # x, y, z in space
+    power_up = False  # variable to see if the power is up or down
 
     GPIO.setmode(GPIO.BCM)
 
@@ -37,12 +38,12 @@ class Arm:
     WRIST_ROTATE_SENSOR_PIN = 0
     WRIST_ROTATE_SERVO_PIN = 19
 
-    START_Q = [0, 500, 0]
-    OFF_Q = [0, 400, 0]  # TODO: SET TO VALUES WE WANT
+    START_Q = [-1000, 500, 0]
+    OFF_Q = [-500, 500, -90]  # TODO: SET TO VALUES WE WANT
 
-    MOVE_WORD = 'up'
-    ROTATE_WORD = 'in'
-    PAN_WORD = 'up'
+    MOVE_WORD = 'up'  # and down
+    ROTATE_WORD = 'here'  # and there
+    PAN_WORD = 'up'  # and down
 
     gripper_closed = [True, True]  # gripper 1 and gripper 2 status (closed is true)
 
@@ -63,16 +64,13 @@ class Arm:
         self.gripper_2 = Gripper(gripper_motor_r)
         self.__update_q(self.START_Q)
         self.__full_set_position()
-        time.sleep(100)
         self.o_curr = FK(self.q)
         return
 
     def __full_set_position(self):
-        self.pan.set_position(0)
-        #self.pan.set_position(q[self.PAN_MOTOR])
+        self.pan.set_position(self.q[self.PAN_MOTOR])
         self.vertical.set_position(self.q[self.VERTICAL_MOTOR])
         self.rotate.set_position(self.q[self.ROTATE_MOTOR])
-        time.sleep(1000)
         self.gripper_1.close()
         self.gripper_2.close()
         return
@@ -89,16 +87,23 @@ class Arm:
         else:
             command = command.lower()
             command = self.__remove_symbols_and_name(command)
-            if 'start' in command or 'stop' in command:
-                self.__parse_motion_cmd(command)
-            elif 'open' in command or 'close' in command:
-                self.__parse_gripper_cmd(command)
-            elif 'go to' in command:
-                self.__parse_location_cmd(command)
-            elif 'power' in command:
-                self.__parse_power_cmd(command)
+            if self.power_up:
+                if 'start' in command or 'stop' in command:
+                    self.__parse_motion_cmd(command)
+                elif 'open' in command or 'close' in command:
+                    self.__parse_gripper_cmd(command)
+                elif 'go to' in command:
+                    self.__parse_location_cmd(command)
+                elif 'power down' in command:
+                    self.__power_down()
+                else:
+                    self.__parse_relative_cmd(command)
             else:
-                self.__parse_relative_cmd(command)
+                if 'power up' in command:
+                    self.__power_up()
+                else:
+                    print('turn power up first!')
+
         print('parse return done')
         return
 
@@ -186,7 +191,16 @@ class Arm:
             return
         return
 
-    def __parse_power_cmd(self, command):
-        self.__update_q(self.START_Q) if 'on' in command else self.__update_q(self.OFF_Q)
+    def __power_up(self):
+        self.vertical.zero()
+        self.__update_q(self.START_Q)
         self.__full_set_position()
+        print('POWERING UP')
         return
+
+    def __power_down(self):
+        self.__update_q(self.OFF_Q)
+        self.__full_set_position()
+        print('POWERING DOWN')
+        return
+

@@ -36,7 +36,7 @@ while True:
                 print ('NO VALID COMMAND GIVEN')
             else:
                 print("Google thinks you said: " + transcript)
-            if transcript == 'stop listening Graham':
+            if transcript == 'stop listening ' + name:
                 break
     except Exception as exception:
         print('Exception handle: Exceed max stream of 65 seconds')
