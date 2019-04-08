@@ -30,7 +30,7 @@ class Arm:
     ELEVATOR_ENCODER_PIN_A = 7
     ELEVATOR_ENCODER_PIN_B = 1
 
-    NAME = 'jimmy'
+    NAME = 'Graham'
     OFFSET = 0
 
     WRIST_PAN_PIN = 18
@@ -105,8 +105,8 @@ class Arm:
     def __remove_symbols_and_name(self, cmd):
         cmd = re.sub("[^A-Za-z0-9 ]", "", cmd, flags=re.UNICODE)
         replace_map = {self.NAME: '', 'units': '', 'unit': '', '-in': '', 'degrees': '', 'inches': '', 'inch': '',
-                       'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6', 'seven': '7',
-                       'eight': '8', 'nine': '9', 'to': '2'
+                       'in': '', 'one': '1', 'two': '2', 'three': '3', 'four': '4', 'five': '5', 'six': '6',
+                       'seven': '7', 'eight': '8', 'nine': '9', 'to': '2'
                        }
         for entry in replace_map:
             cmd = cmd.replace(entry, replace_map[entry])

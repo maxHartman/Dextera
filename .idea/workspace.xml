@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b9272760-ac35-4b47-91b6-8a8a7c640a07" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GoogleCloudSpeech.py" beforeDir="false" afterPath="$PROJECT_DIR$/GoogleCloudSpeech.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/arm.py" beforeDir="false" afterPath="$PROJECT_DIR$/arm.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new-account-key.json" beforeDir="false" afterPath="$PROJECT_DIR$/new-account-key.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,11 +16,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.5">
       <split-first>
         <leaf>
-          <file pinned="false" current-in-tab="true">
+          <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/arm.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="973">
-                  <caret line="112" column="18" selection-start-line="112" selection-start-column="18" selection-end-line="112" selection-end-column="18" />
+                <state relative-caret-position="175">
+                  <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
                   <folding>
                     <element signature="e#0#13#0" expanded="true" />
                   </folding>
@@ -40,11 +39,11 @@
               </provider>
             </entry>
           </file>
-          <file pinned="false" current-in-tab="false">
+          <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/GoogleCloudSpeech.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="94">
-                  <caret line="23" selection-start-line="23" selection-end-line="23" />
+                <state relative-caret-position="297">
+                  <caret line="133" column="47" lean-forward="true" selection-start-line="133" selection-start-column="47" selection-end-line="133" selection-end-column="47" />
                   <folding>
                     <element signature="e#312#343#0" expanded="true" />
                   </folding>
@@ -68,8 +67,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/main.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="421">
-                  <caret line="30" selection-start-line="30" selection-end-line="30" />
+                <state relative-caret-position="513">
+                  <caret line="38" column="51" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
                   <folding>
                     <element signature="e#0#30#0" expanded="true" />
                   </folding>
@@ -105,6 +104,14 @@
       </split-second>
     </splitter>
   </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>Jimmy</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>Graham</replace>
+    </replaceStrings>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
@@ -113,10 +120,10 @@
       <list>
         <option value="$PROJECT_DIR$/requirements.txt" />
         <option value="$PROJECT_DIR$/old_main.py" />
-        <option value="$PROJECT_DIR$/GoogleCloudSpeech.py" />
         <option value="$PROJECT_DIR$/new-account-key.json" />
         <option value="$PROJECT_DIR$/arm.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/GoogleCloudSpeech.py" />
       </list>
     </option>
   </component>
@@ -144,6 +151,15 @@
               <item name="dextera" type="b2602c69:ProjectViewProjectNode" />
               <item name="dextera" type="462c0819:PsiDirectoryNode" />
               <item name="venv" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="dextera" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+            </path>
+            <path>
+              <item name="dextera" type="b2602c69:ProjectViewProjectNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
+              <item name="&lt; Python 3.5 (dextera) &gt;" type="70bed36:NamedLibraryElementNode" />
             </path>
           </expand>
           <select />
@@ -191,7 +207,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="4412000" />
+    <option name="totallyTimeSpent" value="5826000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1057" extended-state="0" />
@@ -210,9 +226,9 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="8" />
       <window_info anchor="bottom" id="Database Changes" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50106496" side_tool="true" visible="true" weight="0.32953367" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49893504" visible="true" weight="0.32953367" />
-      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49946752" weight="0.32953367" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.50159746" side_tool="true" visible="true" weight="0.32953367" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="11" sideWeight="0.49840257" visible="true" weight="0.32953367" />
+      <window_info anchor="bottom" id="Python Console" order="12" sideWeight="0.49893504" weight="0.32953367" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -228,16 +244,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="11" lean-forward="true" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GoogleCloudSpeech.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="94">
-          <caret line="23" selection-start-line="23" selection-end-line="23" />
-          <folding>
-            <element signature="e#312#343#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -301,8 +307,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/arm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="973">
-          <caret line="112" column="18" selection-start-line="112" selection-start-column="18" selection-end-line="112" selection-end-column="18" />
+        <state relative-caret-position="175">
+          <caret line="32" column="18" selection-start-line="32" selection-start-column="18" selection-end-line="32" selection-end-column="18" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
@@ -311,10 +317,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        <state relative-caret-position="513">
+          <caret line="38" column="51" selection-start-line="38" selection-start-column="51" selection-end-line="38" selection-end-column="51" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GoogleCloudSpeech.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="297">
+          <caret line="133" column="47" lean-forward="true" selection-start-line="133" selection-start-column="47" selection-end-line="133" selection-end-column="47" />
+          <folding>
+            <element signature="e#312#343#0" expanded="true" />
           </folding>
         </state>
       </provider>

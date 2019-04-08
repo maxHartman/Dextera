@@ -2,7 +2,7 @@ import GoogleCloudSpeech as gc
 import pyaudio
 #from arm import Arm
 
-name = 'Jimmy'
+name = 'Graham'
 key_words_arr = [name, 'move up', 'move down', 'inches', 'degrees', 'rotate in', 'rotate out', 'pan up', 'pan down']
 language_code = 'en-US'  # a BCP-47 language tag
 
@@ -22,18 +22,22 @@ streaming_config = gc.types.StreamingRecognitionConfig(
 #dextera = Arm()
 
 while True:
-    with gc.MicrophoneStream(gc.RATE, gc.CHUNK) as stream:
-        audio_generator = stream.generator()
-        requests = (gc.types.StreamingRecognizeRequest(audio_content=content)
-                    for content in audio_generator)
+    try:
+        with gc.MicrophoneStream(gc.RATE, gc.CHUNK) as stream:
+            audio_generator = stream.generator()
+            requests = (gc.types.StreamingRecognizeRequest(audio_content=content)
+                        for content in audio_generator)
 
-        responses = client.streaming_recognize(streaming_config, requests)
-        # Now, put the transcription responses to use.
-        transcript = gc.listen_print_loop(responses)
-        #dextera.parse_text(transcript)
-        if transcript == '':
-            print ('NO VALID COMMAND GIVEN')
-        else:
-            print("Google thinks you said: " + transcript)
-        if transcript == 'stop listening Jimmy':
-            break
+            responses = client.streaming_recognize(streaming_config, requests)
+            # Now, put the transcription responses to use.
+            transcript = gc.listen_print_loop(responses)
+            #dextera.parse_text(transcript)
+            if transcript == '':
+                print ('NO VALID COMMAND GIVEN')
+            else:
+                print("Google thinks you said: " + transcript)
+            if transcript == 'stop listening Graham':
+                break
+    except Exception as exception:
+        print('Exception handle: Exceed max stream of 65 seconds')
+
