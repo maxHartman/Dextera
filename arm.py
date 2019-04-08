@@ -61,7 +61,7 @@ class Arm:
 
         self.gripper_1 = Gripper(gripper_motor_l)
         self.gripper_2 = Gripper(gripper_motor_r)
-        self.q = [0, 0, 45]  # TODO: NOTE: 50 is just a placeholder... figure out absolute vertical position
+        self.q = [0, 0, 0]  # TODO: NOTE: 50 is just a placeholder... figure out absolute vertical position
         self.__full_set_position(self.q)
         self.o_curr = FK(self.q)
         return
@@ -103,6 +103,7 @@ class Arm:
     def __remove_symbols_and_name(self, cmd):
         cmd = re.sub("[^A-Za-z0-9 ]", "", cmd, flags=re.UNICODE)
         cmd = cmd.replace('degrees', '').replace('inches', '').replace(self.NAME, '')
+        cmd = cmd.replace('units','')
         return cmd
 
     def __parse_motion_cmd(self, command):
@@ -151,11 +152,12 @@ class Arm:
 
     def __parse_relative_cmd(self, command):
         print("relative command")
+        print(command.split())
         new_relative_pos = int(command.split()[-1 + self.OFFSET])
         if 'move' in command:
             direction = 1 if self.MOVE_WORD in command else -1
             new_relative_pos *= direction
-            
+            new_relative_pos *= 1500
             if self.vertical.set_position(self.q[self.VERTICAL_MOTOR] + new_relative_pos):
                 print(str(self.q[self.VERTICAL_MOTOR] + new_relative_pos) + " ... ")
                 self.q[self.VERTICAL_MOTOR] += new_relative_pos
@@ -164,6 +166,7 @@ class Arm:
         if 'rotate' in command:
             direction = 1 if self.ROTATE_WORD in command else -1
             new_relative_pos *= direction
+            new_relative_pos *= 2.78
             if self.rotate.set_position(self.q[self.ROTATE_MOTOR] + new_relative_pos):
                 self.q[self.ROTATE_MOTOR] += new_relative_pos
             return

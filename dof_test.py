@@ -1,5 +1,6 @@
 import time
 from dof import Sensor, Encoder, AnalogInput, GearMotor,ServoMotor, ServoDOF, MotorPIDDOF
+from dof import Gripper
 import pigpio
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BCM)
@@ -7,8 +8,8 @@ GPIO.setmode(GPIO.BCM)
 
 GRIPPER_L_PIN_A = 0
 GRIPPER_L_PIN_B = 22
-GRIPPER_R_PIN_A = 5
-GRIPPER_R_PIN_B = 17
+GRIPPER_R_PIN_A = 17
+GRIPPER_R_PIN_B = 5
 
 ELEVATOR_MOTOR_PIN_A = 2
 ELEVATOR_MOTOR_PIN_B = 3
@@ -31,26 +32,49 @@ wristPan = ServoDOF(pi, WRIST_PAN_PIN)
 wristRotate = MotorPIDDOF(pi, wristRotateMotor, wristAngleSensor, 1, kp=-.001, ki=-.000, kd=-.0000)
 elevator = MotorPIDDOF(pi, elevatorMotor, encoder, 0, kp = 0.05, ki=0, kd=0)
 
-wristPan.set_position(45)
-elevatorMotor.set_power(0)
 
-testMotors = 1
+elevatorMotor.set_power(0)
+gripper_1 = Gripper(gripperMotorR)
+gripper_2 = Gripper(gripperMotorL)
+
+wristRotate.set_position(300)
+wristPan.set_position(0)
+gripper_2.open()
+gripper_2.close()
+elevator.set_position(-5000)
+wristPan.set_position(-15)
+time.sleep(5)
+elevator.disable_pid()
+elevatorMotor.set_power(0.9)
+time.sleep(6)
+elevatorMotor.set_power(0)
+#elevator.set_position(1500)
+wristPan.set_position(15)
+#wristRotate.set_position(800)
+time.sleep(5)
+wristPan.set_position(0)
+
+time.sleep(10)
+while True:
+    pass
+
+testMotors = 0
 while testMotors:
     #test motor classes
 #    gripperMotorR.set_power(.5)
 #    gripperMotorL.set_power(.5)
-    wristRotateMotor.set_power(0.9)
-    elevatorMotor.set_power(-0.9)
+   # wristRotateMotor.set_power(0.9)
+    #elevatorMotor.set_power(0.9)
     time.sleep(10)
 #    #test dofs
-#    wristPan.set_position(45)
+    wristPan.set_position(60)
 #    wristRotate.set_position(200)
 #    time.sleep(3.5)
 #    gripperMotorR.set_power(-.5)
 #    gripperMotorL.set_power(-.5)
 #    wristRotateMotor.set_power(0)
-    elevatorMotor.set_power(-1)
-    #wristPan.set_position(0)
+    #elevatorMotor.set_power(0.9)
+    wristPan.set_position(-60)
     #wristRotateMotor.set_power(-0.5)
     #wristRotate.set_position(700)
     time.sleep(10)
@@ -65,15 +89,15 @@ testDOFs = 1
 while testDOFs:
     
  
-    wristRotate.set_position(200)
-   # elevator.set_position(1500)
-    print(wristAngleSensor.get_value())
+    #wristRotate.set_position(200)
+    elevator.set_position(500)
+    #print(wristAngleSensor.get_value())
     time.sleep(10)
-    #print(elevator.sensor.get_value())
+    print(elevator.sensor.get_value())
 
     print("switching")
-    wristRotate.set_position(800)
-    #elevator.set_position(-1500)
+    #wristRotate.set_position(800)
+    elevator.set_position(-500)
     time.sleep(10)
     #print(elevator.sensor.get_value())
 

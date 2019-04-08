@@ -177,7 +177,7 @@ class Gripper(object):
     motor = None
     close_power = -0.5
     open_power = 0.5
-    sleep_time = 5
+    sleep_time = 3
 
     def __init__(self, motor):
         self.motor = motor
