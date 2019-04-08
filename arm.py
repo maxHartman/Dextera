@@ -112,7 +112,7 @@ class Arm:
         cmd = re.sub("[^A-Za-z0-9 ]", "", cmd, flags=re.UNICODE)
         replace_map = {self.NAME.lower(): '', 'units ': '', 'unit ': '', '-in ': '', 'degrees ': '', 'inches ': '', 'inch ': '',
                        'in ': '', 'one ': '1 ', 'two ': '2 ', 'three ': '3 ', 'four ': '4 ', 'five ': '5 ', 'six ': '6 ',
-                       'seven ': '7 ', 'eight ': '8 ', 'nine ': '9 ', 'to ': '2 '
+                       'seven ': '7 ', 'eight ': '8 ', 'nine ': '9 ', 'to ': '2 ', 'powerup': 'power up', 'hear ': 'here '
                        }
         for entry in replace_map:
             cmd = cmd.replace(entry, replace_map[entry])

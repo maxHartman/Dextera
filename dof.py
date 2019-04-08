@@ -337,8 +337,10 @@ class MotorPIDDOF(DOF):
         return
 
     def zero(self):
+        self.motor.set_power(0.95)
+        time.sleep(3)
         self.motor.set_power(0.5)
-        time.sleep(5)
+        time.sleep(15)
         self.sensor.reset_position()
         self.set_position(-1000)
         time.sleep(5)	
