@@ -208,6 +208,8 @@ class DOF(object):
     def set_velocity(self, velocity):  # will effectively just set power
         pass
 
+    def get_position(self):
+        pass
 
 class ServoDOF(DOF):
     
@@ -258,8 +260,10 @@ class ServoDOF(DOF):
         return False
 
     def get_position(self):
-        thous_position = self.pi.get_servo_pulsewidth(self.pin)
-        return self.__convert_to_degrees(thous_position)
+        print("can't get position of this servo")
+        #thous_position = self.pi.get_servo_pulsewidth(self.pin)
+        #return self.sensor.get_value()/360
+        #return self.__convert_to_degrees(thous_position)
 
     def set_velocity(self, velocity):
         print ('NOT IMPLEMENTED')
@@ -324,12 +328,13 @@ class MotorPIDDOF(DOF):
 
     def stop(self):
         self.disable_pid()
+        self.motor.set_power(0)
         # TODO: update location
         return
 
     def zero(self):
         self.motor.set_power(0.5)
-        time.sleep(20)
+        time.sleep(5)
         self.sensor.reset_position()
         self.set_position(-1000)
         time.sleep(5)	
@@ -410,5 +415,4 @@ class MotorPIDDOF(DOF):
         #   self.s.run()
 
     def get_position(self):  # TODO: IMPLEMENT
-        print ('NOT YET IMPLEMENTED')
-        pass
+        return self.sensor.get_value()

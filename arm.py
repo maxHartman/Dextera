@@ -57,7 +57,7 @@ class Arm:
         self.elevator_motor = GearMotor(pi, self.ELEVATOR_MOTOR_PIN_A, self.ELEVATOR_MOTOR_PIN_B)
 
         self.pan = ServoDOF(pi, self.WRIST_PAN_PIN)
-        self.rotate = MotorPIDDOF(pi, wrist_rotate_motor, wrist_angle_sensor, 1, kp=-.001, ki=-.000, kd=-.0000, MIN=0, MAX=1000)
+        self.rotate = MotorPIDDOF(pi, wrist_rotate_motor, wrist_angle_sensor, 1, kp=-.001, ki=-.000, kd=-.000, MIN=0, MAX=1000)
         self.vertical = MotorPIDDOF(pi, self.elevator_motor, encoder, 0, kp=0.05, ki=0, kd=0, MIN=-9000, MAX=0)
 
         self.gripper_1 = Gripper(gripper_motor_l)
@@ -137,8 +137,8 @@ class Arm:
             # TODO: figure out stop position, update q, stop for other motors...
             self.vertical.stop()
             self.rotate.stop()
-            self.pan.stop()  # NOT IMPLEMENTED
-            self.__update_q([self.vertical.get_position(), self.rotate.get_position(), self.pan.get_position()])
+            #self.pan.stop()  # NOT IMPLEMENTED
+            self.__update_q([self.vertical.get_position(), self.rotate.get_position()/5, self.q[self.PAN_MOTOR]])
         return
 
     def __parse_gripper_cmd(self, command):  # 'Open gripper x'
@@ -170,7 +170,7 @@ class Arm:
         if 'move' in command:
             direction = 1 if self.MOVE_WORD in command else -1
             new_relative_pos *= direction
-            new_relative_pos *= 1500
+            new_relative_pos *= 2250
             if self.vertical.set_position(self.q[self.VERTICAL_MOTOR] + new_relative_pos):
                 print(str(self.q[self.VERTICAL_MOTOR] + new_relative_pos) + " ... ")
                 self.q[self.VERTICAL_MOTOR] += new_relative_pos
@@ -178,14 +178,15 @@ class Arm:
             return
         if 'rotate' in command:
             direction = 1 if self.ROTATE_WORD in command else -1
-            new_relative_pos *= direction
-            new_relative_pos *= 2.78
-            if self.rotate.set_position(self.q[self.ROTATE_MOTOR] + new_relative_pos):
+            new_relative_pos *= direction * -1
+            new_relative_pos *= 3.6
+            new_position = (self.q[self.ROTATE_MOTOR] + new_relative_pos + 1000) % 1000
+            if self.rotate.set_position(new_position):
                 self.q[self.ROTATE_MOTOR] += new_relative_pos
             return
         if 'pan' in command:
             direction = 1 if self.PAN_WORD in command else -1
-            new_relative_pos *= direction
+            new_relative_pos *= direction * -1
             print("panning")
             print(self.q[self.PAN_MOTOR] + new_relative_pos)
             if self.pan.set_position(self.q[self.PAN_MOTOR] + new_relative_pos):
