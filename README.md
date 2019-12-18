@@ -1,2 +1,2 @@
-# Motion-Control-2.0
-This is a Senior Design project to create a voice-controlled robotic third arm for soldering.
+# Dextera - Senior Design Final Project
+This is a project to create a voice-controlled robotic third arm for soldering.
