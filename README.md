@@ -1,6 +1,6 @@
 # Dextera - Senior Design Final Project
 
-__Authors__: Ethan Bradlow, Liam Cook, Cheryl Feig, Danielle Gelb, Max Hartman, Alexis Mitchnick 
+__Authors__: Ethan Bradlow, Liam Cook, Cheryl Feig, Danielle Gelb, Max Hartman, Alexis Mitchnick  
 __Date__: Fall 2018 - Spring 2019
 
 ## Abstract
